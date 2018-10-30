@@ -1,0 +1,56 @@
+---
+# tasks file for create-mysql-dbs-and-users
+
+- name: "Only passing individual values"
+  block:
+
+    - name: "MYSQL | Create {{ create_mysql_dbs_and_users_db_name }} database"
+      mysql_db:
+        state: present
+        name: "{{ create_mysql_dbs_and_users_db_name }}"
+        login_password: "{{ create_mysql_dbs_and_users_mysql_root_db_password }}"
+        collation: "utf8_unicode_ci"
+        encoding: "utf8mb4"
+      when: create_mysql_dbs_and_users_create_db
+      
+    - name: "MYSQL | Create {{ create_mysql_dbs_and_users_db_user }} user"
+      mysql_user:
+        state: present
+        name: "{{ create_mysql_dbs_and_users_db_user }}"
+        login_password: "{{ create_mysql_dbs_and_users_mysql_root_db_password }}"    
+        password: "{{ create_mysql_dbs_and_users_db_password }}"
+        host: '%'
+        priv: '{{ create_mysql_dbs_and_users_db_name }}.{{ create_mysql_dbs_and_users_privileges }}'
+      when: create_mysql_dbs_and_users_create_user
+
+  when: not create_mysql_dbs_and_users_use_list
+  notify: "restart mysql"
+  
+- name: "Passing a list of of values"
+  block:
+  
+    - name: "MYSQL | Create {{ item.name }} database"
+      mysql_db: 
+        state: present
+        name: "{{ item.name }}"
+        login_password: "{{ create_mysql_dbs_and_users_mysql_root_db_password }}"  
+        collation: "utf8_unicode_ci"
+        encoding: "utf8mb4"
+      with_items: '{{ create_mysql_dbs_and_users_list_to_setup }}'
+      when: item.create_db
+
+    - name: "MYSQL | Create {{ item.name }} user"
+      mysql_user:
+        state: present 
+        name: "{{ item.mysql_user }}" 
+        login_password: "{{ create_mysql_dbs_and_users_mysql_root_db_password }}" 
+        password: "{{ item.mysql_password }}"        
+        priv: "{{ item.name }}.{{ item.mysql_user_privileges }}" 
+        host: '%'
+      with_items: '{{ create_mysql_dbs_and_users_list_to_setup }}'
+      when: item.create_user
+
+  when: create_mysql_dbs_and_users_use_list
+  notify: "restart mysql"
+
+

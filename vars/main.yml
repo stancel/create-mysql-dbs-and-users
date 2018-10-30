@@ -1,0 +1,49 @@
+---
+# vars file for create-mysql-dbs-and-users
+
+# Root password for MySQL Server
+create_mysql_dbs_and_users_mysql_root_password: "Some secure root password"
+
+# Single database to setup
+create_mysql_dbs_and_users_db_name: "database-to-setup"
+
+# Single database user to setup
+create_mysql_dbs_and_users_db_user: "user-to-setup"
+
+# Password for single database user to setup
+create_mysql_dbs_and_users_db_password: "password-for-new-user"
+
+# List of databases and users to setup. Not needed unless the "create_mysql_dbs_and_users_use_list" variable is set to true. Default is false.
+create_mysql_dbs_and_users_list_to_setup:
+  - {
+      name: 'my-db-to-create',
+      create_db: true,
+      create_user: false,
+      mysql_user: 'some-user',
+      mysql_password: 'some-password',
+      mysql_user_privileges: '*:ALL',
+    }
+
+
+#####     Optional Variables      #####
+
+# Will you be passing a list of databases and/or database users to setup?
+#create_mysql_dbs_and_users_use_list: false
+
+# Should we create the databases, or skip the DB creation and just create the users?
+#create_mysql_dbs_and_users_create_db: true
+
+# Should we create the user, or skip the user creation and just create the database(s)?
+#create_mysql_dbs_and_users_create_user: true
+
+# Privileges to grant DB user that is created
+#create_mysql_dbs_and_users_privileges: '*:TRIGGER,CREATE ROUTINE,CREATE TEMPORARY TABLES,CREATE VIEW,ALTER ROUTINE,REFERENCES,EVENT,SHOW VIEW,EXECUTE,ALTER,DROP,CREATE,INDEX,SELECT,INSERT,UPDATE,DELETE'
+
+# Trying to set default for key "mysql_user_privileges" of dictionary, "create_mysql_dbs_and_users_list_to_setup"
+#item.mysql_user_privileges: "{{ create_mysql_dbs_and_users_privileges }}"
+
+# Trying to set default for key "create_db" of dictionary, "create_mysql_dbs_and_users_list_to_setup"
+#item.create_db: "{{ create_mysql_dbs_and_users_create_db }}"
+
+# Trying to set default for key "create_user" of dictionary, "create_mysql_dbs_and_users_list_to_setup"
+#item.create_user: "{{ create_mysql_dbs_and_users_create_user }}"
