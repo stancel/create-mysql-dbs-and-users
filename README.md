@@ -56,21 +56,6 @@ List of databases and users to setup. Not needed unless the "create_mysql_dbs_an
     create_mysql_dbs_and_users_privileges: '*:TRIGGER,CREATE ROUTINE,CREATE TEMPORARY TABLES,CREATE VIEW,ALTER ROUTINE,REFERENCES,EVENT,SHOW VIEW,EXECUTE,ALTER,DROP,CREATE,INDEX,SELECT,INSERT,UPDATE,DELETE'
 ```
 
-(Default) Trying to set default for key `mysql_user_privileges` of dictionary, `create_mysql_dbs_and_users_list_to_setup`.
-```
-   item.mysql_user_privileges: "{{ create_mysql_dbs_and_users_privileges }}"
-```
-
-(Default) Trying to set default for key `create_user` of dictionary, `create_mysql_dbs_and_users_list_to_setup`.
-```
-   item.create_user: "{{ create_mysql_dbs_and_users_create_user }}"
-```
-
-(Default) Trying to set default for key `create_db` of dictionary, `create_mysql_dbs_and_users_list_to_setup`.
-```
-   item.create_db: "{{ create_mysql_dbs_and_users_create_db }}"
-```
-
 
 Dependencies
 ------------
