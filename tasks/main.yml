@@ -9,7 +9,7 @@
         state: present
         name: "{{ create_mysql_dbs_and_users_db_name }}"
         login_password: "{{ create_mysql_dbs_and_users_mysql_root_password }}"
-        collation: "utf8_unicode_ci"
+        collation: "utf8mb4_unicode_ci"
         encoding: "utf8mb4"
       when: create_mysql_dbs_and_users_create_db
       notify: "restart mysql"
@@ -35,7 +35,7 @@
         state: present
         name: "{{ item.name }}"
         login_password: "{{ create_mysql_dbs_and_users_mysql_root_password }}"  
-        collation: "utf8_unicode_ci"
+        collation: "utf8mb4_unicode_ci"
         encoding: "utf8mb4"
       with_items: '{{ create_mysql_dbs_and_users_list_to_setup }}'
       when: item.create_db
