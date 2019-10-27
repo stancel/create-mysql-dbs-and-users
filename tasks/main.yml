@@ -38,7 +38,7 @@
         collation: "utf8mb4_unicode_ci"
         encoding: "utf8mb4"
       with_items: '{{ create_mysql_dbs_and_users_list_to_setup }}'
-      when: item.create_db
+      when: item.create_db | default( create_mysql_dbs_and_users_create_db )
       notify: "restart mysql"
 
     - name: "MYSQL | Create {{ item.name }} user"
@@ -47,10 +47,10 @@
         name: "{{ item.mysql_user }}" 
         login_password: "{{ create_mysql_dbs_and_users_mysql_root_password }}" 
         password: "{{ item.mysql_password }}"        
-        priv: "{{ item.name }}.{{ item.mysql_user_privileges }}" 
+        priv: "{{ item.name }}.{{ item.mysql_user_privileges | default( create_mysql_dbs_and_users_privileges ) }}" 
         host: '%'
       with_items: '{{ create_mysql_dbs_and_users_list_to_setup }}'
-      when: item.create_user
+      when: item.create_user | default( create_mysql_dbs_and_users_create_user )
       notify: "restart mysql"
 
   when: create_mysql_dbs_and_users_use_list
