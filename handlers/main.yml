@@ -6,4 +6,3 @@
     name: mysql 
     state: restarted 
     enabled: yes
-

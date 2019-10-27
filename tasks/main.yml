@@ -54,4 +54,3 @@
       notify: "restart mysql"
 
   when: create_mysql_dbs_and_users_use_list
-
